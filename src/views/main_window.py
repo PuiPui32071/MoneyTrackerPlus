@@ -1,8 +1,10 @@
 from typing import Type, Final
 
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QHBoxLayout, QListWidget, QListWidgetItem, \
-    QStackedWidget, QScrollArea, QWidget
+from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QListWidget, QListWidgetItem, \
+    QStackedWidget, QScrollArea, QWidget, QLabel, QDateEdit, QComboBox, QLineEdit, QPushButton \
+    
+from PyQt5.QtCore import QDate
 
 from .chart_view import ChartView
 from .money_tracker_widget import MoneyTrackerWidget
@@ -39,13 +41,17 @@ class MoneyTrackerPlusView(QWidget):
 
         # 创建右侧的内容区域
         self.content_stack = QStackedWidget()
-        for it in self.items:
-            self.content_stack.addWidget(it())
+        self.content_stack.addWidget(self.initAddData())
+        self.content_stack.addWidget(self.initSearchData())
+        self.content_stack.addWidget(self.initPlotAnalysis())
+        self.content_stack.addWidget(self.initAccountBookSettings())
+            
 
         # 设置主布局
         self.layout = QHBoxLayout(self)
         self.layout.addWidget(scroll_area)  # 添加到布局中
         self.layout.addWidget(self.content_stack)
+        
 
     @classmethod
     def get_stylesheet(cls):
@@ -114,3 +120,144 @@ class MoneyTrackerPlusView(QWidget):
 
     def display_content(self, index):
         self.content_stack.setCurrentIndex(index)
+    
+    def initAddData(self) -> QWidget:
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setSpacing(20)
+
+        # 1. 選擇日期
+        date_layout = QHBoxLayout()
+        date_layout.addWidget(QLabel("選擇日期："))
+        date_layout.addStretch()  # 添加空間，將輸入框推到右側
+        self.date_edit = QDateEdit()
+        self.date_edit.setCalendarPopup(True)
+        self.date_edit.setDate(QDate.currentDate())  # 預設為當前日期
+        date_layout.addWidget(self.date_edit)
+        layout.addLayout(date_layout)
+
+        # 2. 選擇收入或支出
+        type_layout = QHBoxLayout()
+        type_layout.addWidget(QLabel("選擇收入或支出："))
+        type_layout.addStretch()
+        self.type_combo = QComboBox()
+        self.type_combo.addItems(["支出", "收入"])
+        type_layout.addWidget(self.type_combo)
+        layout.addLayout(type_layout)
+
+        # 3. 輸入金額
+        amount_layout = QHBoxLayout()
+        amount_layout.addWidget(QLabel("輸入金額："))
+        amount_layout.addStretch()
+        self.amount_input = QLineEdit()
+        self.amount_input.setPlaceholderText("請輸入金額")  # 輸入提示
+        amount_layout.addWidget(self.amount_input)
+        layout.addLayout(amount_layout)
+
+        # 4. 確定新增按鈕
+        button_layout = QHBoxLayout()
+        button_layout.addWidget(QLabel(""))
+        button_layout.addStretch()
+        self.submit_button = QPushButton("確定新增")
+        self.submit_button.setObjectName("applyButton")
+        button_layout.addWidget(self.submit_button)
+        # self.submit_button.clicked.connect(self.submit_data)  # 綁定事件
+        layout.addLayout(button_layout)
+        
+        return widget
+    
+    def initSearchData(self) -> QWidget:
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setSpacing(20)
+
+        # 1. 選擇日期
+        date_layout = QHBoxLayout()
+        date_layout.addWidget(QLabel("選擇日期："))
+        date_layout.addStretch()  # 添加空間，將輸入框推到右側
+        self.date_edit = QDateEdit()
+        self.date_edit.setCalendarPopup(True)
+        self.date_edit.setDate(QDate.currentDate())  # 預設為當前日期
+        date_layout.addWidget(self.date_edit)
+        layout.addLayout(date_layout)
+
+        # 4. 確定新增按鈕
+        button_layout = QHBoxLayout()
+        button_layout.addWidget(QLabel(""))
+        button_layout.addStretch()
+        self.submit_button = QPushButton("確定")
+        self.submit_button.setObjectName("applyButton")
+        button_layout.addWidget(self.submit_button)
+        # self.submit_button.clicked.connect(self.submit_data)  # 綁定事件
+        layout.addLayout(button_layout)
+        
+        return widget
+    
+    def initPlotAnalysis(self) -> QWidget:
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setSpacing(20)
+
+        # 1. 選擇起始日期
+        date_layout = QHBoxLayout()
+        date_layout.addWidget(QLabel("選擇起始日期："))
+        date_layout.addStretch()  # 添加空間，將輸入框推到右側
+        self.date_edit = QDateEdit()
+        self.date_edit.setCalendarPopup(True)
+        self.date_edit.setDate(QDate.currentDate())  # 預設為當前日期
+        date_layout.addWidget(self.date_edit)
+        layout.addLayout(date_layout)
+
+        # 2. 選擇結束日期
+        date_layout = QHBoxLayout()
+        date_layout.addWidget(QLabel("選擇結束日期："))
+        date_layout.addStretch()  # 添加空間，將輸入框推到右側
+        self.date_edit = QDateEdit()
+        self.date_edit.setCalendarPopup(True)
+        self.date_edit.setDate(QDate.currentDate())  # 預設為當前日期
+        date_layout.addWidget(self.date_edit)
+        layout.addLayout(date_layout)
+
+        # 4. 確定新增按鈕
+        button_layout = QHBoxLayout()
+        button_layout.addWidget(QLabel(""))
+        button_layout.addStretch()
+        self.submit_button = QPushButton("確定")
+        self.submit_button.setObjectName("applyButton")
+        button_layout.addWidget(self.submit_button)
+        # self.submit_button.clicked.connect(self.submit_data)  # 綁定事件
+        layout.addLayout(button_layout)
+        
+        return widget
+    
+    def initAccountBookSettings(self) -> QWidget:
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setSpacing(20)
+
+        # 2. 選擇當前帳本
+        type_layout = QHBoxLayout()
+        type_layout.addWidget(QLabel("選擇當前帳本："))
+        type_layout.addStretch()
+        self.type_combo = QComboBox()
+        self.type_combo.addItems(["Book1", "Book2", "Book3"])
+        account_select_button = QPushButton("確定")
+        account_select_button.setObjectName("applyButton")
+        type_layout.addWidget(self.type_combo)
+        type_layout.addWidget(account_select_button)
+        layout.addLayout(type_layout)
+
+        # 3. 新增帳本
+        name_layout = QHBoxLayout()
+        name_layout.addWidget(QLabel("新增帳本："))
+        name_layout.addStretch()
+        self.name_input = QLineEdit()
+        self.name_input.setPlaceholderText("請輸入帳本名稱")  # 輸入提示
+        account_add_button = QPushButton("確定")
+        account_add_button.setObjectName("applyButton")
+        name_layout.addWidget(self.name_input)
+        name_layout.addWidget(account_add_button)
+        layout.addLayout(name_layout)
+
+        
+        return widget
