@@ -43,13 +43,11 @@ class MoneyTrackerPlusView(QWidget):
         self.content_stack = QStackedWidget()
         for it in self.items:
             self.content_stack.addWidget(it(self))
-            
 
         # 设置主布局
         self.layout = QHBoxLayout(self)
         self.layout.addWidget(scroll_area)  # 添加到布局中
         self.layout.addWidget(self.content_stack)
-        
 
     @classmethod
     def get_stylesheet(cls):
