@@ -42,6 +42,15 @@ class TransactionEditView(MoneyTrackerWidget):
         amount_layout.addWidget(self.amount_input)
         layout.addLayout(amount_layout)
 
+        # 3. 輸入備註
+        amount_layout = QHBoxLayout()
+        amount_layout.addWidget(QLabel("輸入備註："))
+        amount_layout.addStretch()
+        self.amount_input = QLineEdit()
+        self.amount_input.setPlaceholderText("請輸入備註")  # 輸入提示
+        amount_layout.addWidget(self.amount_input)
+        layout.addLayout(amount_layout)
+
         # 4. 確定新增按鈕
         button_layout = QHBoxLayout()
         button_layout.addWidget(QLabel(""))
