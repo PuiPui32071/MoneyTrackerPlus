@@ -6,8 +6,8 @@ import os
 class downloadAccountBooks:
 
     def setUp(self):
-        self.cred_path = './Firebase_credit/moneytrackerplus-firebase-adminsdk-aqbar-de7e7069eb.json'
-        self.db_url = 'https://moneytrackerplus-default-rtdb.firebaseio.com/'
+        self.cred_path = './Firebase_credit/test-f6464-firebase-adminsdk-7picu-ff49354980.json'
+        self.db_url = 'https://test-f6464-default-rtdb.firebaseio.com/'
         self.cloud_service = CloudSyncService(self.cred_path, self.db_url)
         self.file_path = 'test_account_books.json'
         self.data_service = DataService(self.file_path)

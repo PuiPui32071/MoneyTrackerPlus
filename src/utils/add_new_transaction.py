@@ -1,7 +1,6 @@
 from datetime import datetime
 from models import *
 from services import *
-from models.account_book import AccountBook
 import os
 
 class addNewTransaction:

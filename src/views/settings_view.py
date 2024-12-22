@@ -1,9 +1,8 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QPushButton, QLineEdit, QMessageBox
 
 from .money_tracker_widget import MoneyTrackerWidget
-from services.add_new_accountbook import addNewAccountBook
-from services.download_accountbooks import downloadAccountBooks
-from models.account_book import AccountBook
+from models import *
+from utils import *
 
 
 class SettingsView(MoneyTrackerWidget):

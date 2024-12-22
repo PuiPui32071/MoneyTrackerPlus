@@ -2,10 +2,8 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QDateEdit, QComboBox, QLineEdit, QPushButton, QMessageBox
 
 from .money_tracker_widget import MoneyTrackerWidget
-from services.download_accountbooks import downloadAccountBooks
-from services.add_new_transaction import addNewTransaction
-from models.account_book import AccountBook
-from models.transaction import Transaction
+from models import *
+from utils import *
 
 class TransactionEditView(MoneyTrackerWidget):
 
