@@ -4,11 +4,14 @@ import firebase_admin
 from firebase_admin import credentials, db, _apps
 from typing import List, Dict, Any
 from datetime import datetime
-from src.models.account_book import AccountBook
-from src.models.transaction import Transaction
+from models.account_book import AccountBook
+from models.transaction import Transaction
 
 
 class CloudSyncService:
+    """
+    This is a Service class that is responsible for syncing account books with Firebase Realtime Database.
+    """
     def __init__(self, cred_path: str, db_url: str) -> None:
         """
         Initialize Firebase app with credentials and database URL.
@@ -55,12 +58,18 @@ class CloudSyncService:
         :rtype: AccountBook
         """
         account_book = AccountBook(data['name'])
-        for transaction_data in data['transactions']:
-            transaction = Transaction(
-                id=transaction_data['id'],
-                amount=transaction_data['amount'],
-                date=datetime.fromisoformat(transaction_data['date']),
-                description=transaction_data['description']
-            )
-            account_book.add_transaction(transaction)
+
+        # 確認 'transactions' 是否存在並且是可迭代物件
+        transactions = data.get('transactions', [])
+        if isinstance(transactions, list):  # 確認是清單
+            for transaction_data in transactions:
+                transaction = Transaction(
+                    id=transaction_data['id'],
+                    amount=transaction_data['amount'],
+                    date=datetime.fromisoformat(transaction_data['date']),
+                    description=transaction_data['description'],
+                )
+                account_book.add_transaction(transaction)
+
         return account_book
+

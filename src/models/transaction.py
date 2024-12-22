@@ -11,6 +11,7 @@ class Transaction:
     """
 
     def __init__(self, id: int, amount: float, date: datetime, description: str, type: str, category: 'TransactionCategory'):
+
         """
         Initialize a Transaction instance.
 
@@ -49,7 +50,6 @@ class Transaction:
             'type': self.type,
             'category': self.category.name
         }
-        
 
 
 @dataclass
@@ -83,7 +83,6 @@ class TransactionCategory:
         :return: TransactionCategory instance.
         :rtype: TransactionCategory
         """
-        # TODO: Implement this method
         return cls(name=data['name'], type=data['type'])
     
     @staticmethod
