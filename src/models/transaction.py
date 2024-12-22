@@ -38,5 +38,6 @@ class Transaction:
             'id': self.id,
             'amount': self.amount,
             'date': self.date.isoformat(),
-            'description': self.description
+            'description': self.description,
+            'type': self.type
         }

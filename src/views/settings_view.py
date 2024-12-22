@@ -1,7 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QPushButton, QLineEdit, QMessageBox
 
 from .money_tracker_widget import MoneyTrackerWidget
-from services.add_accountbook import addAccountBook
+from services.add_new_accountbook import addNewAccountBook
+from services.download_accountbooks import downloadAccountBooks
+from models.account_book import AccountBook
 
 
 class SettingsView(MoneyTrackerWidget):
@@ -13,18 +15,8 @@ class SettingsView(MoneyTrackerWidget):
     def initAccountBookSettings(self):
         layout = QVBoxLayout(self)
         layout.setSpacing(20)
-
-        # 2. 選擇當前帳本
-        type_layout = QHBoxLayout()
-        type_layout.addWidget(QLabel("選擇當前帳本："))
-        type_layout.addStretch()
-        self.type_combo = QComboBox()
-        self.type_combo.addItems(["Book1", "Book2", "Book3"])
-        account_select_button = QPushButton("確定")
-        account_select_button.setObjectName("applyButton")
-        type_layout.addWidget(self.type_combo)
-        type_layout.addWidget(account_select_button)
-        layout.addLayout(type_layout)
+        download = downloadAccountBooks()
+        self.accountbooks = download.setUp()
 
         # 3. 新增帳本
         name_layout = QHBoxLayout()
@@ -42,29 +34,34 @@ class SettingsView(MoneyTrackerWidget):
     def add_account_book(self):
         accountbook_name = self.name_input.text().strip()
         if accountbook_name:
-            self.set_up = addAccountBook()
+            self.set_up = addNewAccountBook()
             success = self.set_up.setUp(accountbook_name)
             if success:
                 msg_box = QMessageBox()
                 msg_box.setIcon(QMessageBox.Information)
                 msg_box.setWindowTitle("成功")
                 msg_box.setText(f"帳本 '{accountbook_name}' 新增成功！")
-                msg_box.setStyleSheet("QLabel{color: black; font-size: 20pt;}")  # 设置文字颜色为黑色
+                msg_box.setStyleSheet("QLabel{color: black; font-size: 10pt;}")  # 设置文字颜色为黑色
                 msg_box.exec_()
             else:
                 msg_box = QMessageBox()
                 msg_box.setIcon(QMessageBox.Warning)
                 msg_box.setWindowTitle("失敗")
                 msg_box.setText("帳本新增失敗，請重試！")
-                msg_box.setStyleSheet("QLabel{color: black; font-size: 20pt;}")  # 设置文字颜色为黑色
+                msg_box.setStyleSheet("QLabel{color: black; font-size: 10pt;}")  # 设置文字颜色为黑色
                 msg_box.exec_()
         else:
             msg_box = QMessageBox()
             msg_box.setIcon(QMessageBox.Warning)
             msg_box.setWindowTitle("錯誤")
             msg_box.setText("請輸入帳本名稱！")
-            msg_box.setStyleSheet("QLabel{color: black; font-size: 20pt;}")  # 设置文字颜色为黑色
+            msg_box.setStyleSheet("QLabel{color: black; font-size: 10pt;}")  # 设置文字颜色为黑色
             msg_box.exec_()
+    
+    def select_account_book(self):
+        self.current_accountbook = self.type_combo.currentText()
+        
+        
 
             
     @classmethod

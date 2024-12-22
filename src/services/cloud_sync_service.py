@@ -55,12 +55,18 @@ class CloudSyncService:
         :rtype: AccountBook
         """
         account_book = AccountBook(data['name'])
-        for transaction_data in data['transactions']:
-            transaction = Transaction(
-                id=transaction_data['id'],
-                amount=transaction_data['amount'],
-                date=datetime.fromisoformat(transaction_data['date']),
-                description=transaction_data['description']
-            )
-            account_book.add_transaction(transaction)
+
+        # 確認 'transactions' 是否存在並且是可迭代物件
+        transactions = data.get('transactions', [])
+        if isinstance(transactions, list):  # 確認是清單
+            for transaction_data in transactions:
+                transaction = Transaction(
+                    id=transaction_data['id'],
+                    amount=transaction_data['amount'],
+                    date=datetime.fromisoformat(transaction_data['date']),
+                    description=transaction_data['description'],
+                )
+                account_book.add_transaction(transaction)
+
         return account_book
+
