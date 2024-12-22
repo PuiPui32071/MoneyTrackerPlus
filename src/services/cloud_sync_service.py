@@ -9,6 +9,9 @@ from models.transaction import Transaction
 
 
 class CloudSyncService:
+    """
+    This is a Service class that is responsible for syncing account books with Firebase Realtime Database.
+    """
     def __init__(self, cred_path: str, db_url: str) -> None:
         """
         Initialize Firebase app with credentials and database URL.
