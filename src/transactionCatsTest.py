@@ -26,17 +26,17 @@ if __name__ == '__main__':
     axes = axes.flatten()
 
     for i, category in enumerate(categories):
-        print(category.name)
+        print(category.category)
 
         # Load and display the image
-        icon_path = os.path.join(f'images/{category.name}.png')
+        icon_path = os.path.join(f'images/{category.category}.png')
         if os.path.exists(icon_path):
             img = imread(icon_path)
             axes[i].imshow(img)
             axes[i].axis('off')
-            axes[i].set_title(category.name)
+            axes[i].set_title(category.category)
         else:
-            axes[i].text(0.5, 0.5, f"No icon for\n{category.name}", ha='center', va='center')
+            axes[i].text(0.5, 0.5, f"No icon for\n{category.category}", ha='center', va='center')
             axes[i].axis('off')
 
     # Remove any unused subplots
